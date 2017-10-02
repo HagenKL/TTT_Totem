@@ -1,6 +1,9 @@
 local bg = Color(0, 0, 10, 200)
 local margin = 275
 
+local DPanelGH = nil
+local DPanelEG = nil
+
 local health_colors = {
    border = COLOR_WHITE,
    background = Color(20, 20, 5, 222),
@@ -46,7 +49,7 @@ local function DeathGripHUD() // similar to TTT Code
   local client = LocalPlayer()
 
   if !client.DeathGrip or !IsValid(client.DeathGrip) then return end
-  
+
   local width = 250
   local height = 90
 
@@ -79,8 +82,18 @@ local function DeathGripCL()
   hook.Add("HUDPaint", "DeathGripHUD", DeathGripHUD)
 end
 
+local function ClearEG()
+    if DPanelEG and IsValid(DPanelEG) then
+      DPanelEG:Remove()
+    end
+end
+
 local function ResetDeathGrip()
   LocalPlayer().DeathGrip = nil // Reset
+  if LocalPlayer().TeammatesDG then LocalPlayer().TeammatesDG = nil end
+  if DPanelGH and IsValid( DPanelGH ) then
+    DPanelGH:Remove()
+  end
   hook.Remove("HUDPaint", "DeathGripHUD")
 end
 
@@ -89,12 +102,59 @@ local function DeathGripMessage()
   chat.PlaySound()
 end
 
+local function ShinigamiGui( EvilTbl )
+    if not GetConVar( "ttt_shinigami_gui" ):GetBool() then return end
+    if not EvilTbl then return end
+
+    --todo: add row / column system
+    local lineHeight = 25
+    local lineWidth = 300
+    local margin = 5
+
+    ClearEG()
+
+    DPanelEG = vgui.Create( "DPanel" )
+    local panelHeight = (lineHeight + margin) * num
+    local panelWidth = lineWidth
+    local panelPosX = ( ScrW() / 2 ) - ( panelWidth / 2 )
+    local panelPosY = ScrH() - panelHeight - 95
+
+    DPanelEG:SetPos( panelPosX, panelPosY ) -- Set the position of the panel
+    DPanelEG:SetSize( panelWidth, panelHeight ) -- Set the size of the panel
+    DPanelEG:SetBackgroundColor( Color( 0, 0, 0, 0 ) )
+    --timer.Simple( 2, function()
+    --      function DPanelEG:Think()
+    --          if not LocalPlayer():IsActive() then
+    --              self:Remove()
+    --          end
+    --      end
+    -- end )
+
+    -- Create Labels
+    for i, ply in pairs( EvilTbl ) do
+        local pan = vgui.Create( "DPanel", DPanelEG )
+        pan:SetPos( 0, ( lineHeight + margin ) * (i - 1) )
+        pan:SetSize( panelWidth, lineHeight )
+        pan:SetBackgroundColor( Color( 255, 0, 0, 170 ) )
+
+        local lblPlayerNick = vgui.Create( "DLabel", pan )
+        lblPlayerNick:SetText( ply )
+        lblPlayerNick:SetTextColor( Color( 255, 250, 250 ) )
+        lblPlayerNick:SetFont( "Trebuchet24" )
+        lblPlayerNick:Dock( FILL )
+        lblPlayerNick:SetContentAlignment( 5 )
+    end
+end
+
 local function ShinigamiInfo()
   local num = net.ReadUInt(8)
   local str = {"A dark voice whispers: ", COLOR_WHITE, "The Traitors are ",}
+  local EvilTbl = {}
   for i=1, num do
+    local tmp = net.ReadString()
+    table.insert( EvilTbl, tmp )
     table.insert(str, COLOR_RED)
-    table.insert(str, net.ReadString())
+    table.insert(str, tmp)
     table.insert(str, COLOR_WHITE)
     table.insert(str, ", ")
   end
@@ -103,16 +163,83 @@ local function ShinigamiInfo()
 
   chat.AddText(unpack(str))
   chat.PlaySound()
+
+  -- Shinigami GUI
+  ShinigamiGui( EvilTbl )
+
 end
 
 local function DeathGripInfo()
   chat.AddText("A dark voice whispers: ", COLOR_WHITE, "The Shinigami is here, waiting...")
   chat.PlaySound()
+
+  if GetConVar( "ttt_shinigami_hint" ):GetBool() then
+      -- Shinigami GUI hint
+      if DPanelGH and IsValid( DPanelGH ) then
+        DPanelGH:Remove()
+      end
+
+      DPanelGH = vgui.Create( "DPanel" )
+      DPanelGH:SetPos( ScrW() - 76, ScrH() / 4 )
+      DPanelGH:SetSize( 66, 66 )
+      DPanelGH:SetBackgroundColor( Color( 255, 255, 255, 150) )
+
+      local icon = vgui.Create( "DImage", DPanelGH )
+      icon:SetPos( 1, 1 )
+      icon:SetSize( 64, 64 )
+      icon:SetImage( "vgui/ttt/icon_shini" )
+  end
 end
 
+local function DeathGripCHInfo()
+  if not GetConVar( "ttt_deathgrip_ch_warning" ):GetBool() then return end
+  local client = LocalPlayer()
+  --local SafeTranslate = LANG.TryTranslation
+
+  local trace = client:GetEyeTrace(MASK_SHOT)
+  local ent = trace.Entity
+  if (not IsValid(ent)) or ent.NoTarget then return end
+
+  local text = "WARNING: ACTIVE DEATHGRIP"
+  local color = Color( 255, 0, 255, 255 )
+  local x = ScrW() / 2.0
+  local y = ScrH() / 2.0
+  surface.SetFont( "TargetID" )
+  local w, h = surface.GetTextSize( text )
+  x = x - w / 2
+  y = y - 50
+
+  if IsValid(ent:GetNWEntity("ttt_driver", nil)) then
+    ent = ent:GetNWEntity("ttt_driver", nil)
+    if ent == client then return end
+  end
+
+  if ent:IsPlayer() then
+    if not ent:GetNWBool("disguised", false) and ( client.DeathGrip == ent or client.TeammatesDG == ent ) then
+      draw.SimpleText( text, "TargetID", x+1, y+1, COLOR_BLACK )
+      draw.SimpleText( text, "TargetID", x, y, color )
+    end
+  end
+
+end
+
+local function DeathGripNotification()
+    -- Read sent information
+    local ply = net.ReadEntity()
+    local dgply = net.ReadEntity()
+    local sameteam = net.ReadBool()
+    local bgColor = Color( 240, 40, 140, 240 )
+    ENHANCED_NOTIFICATIONS:NewNotification({title=ply:Nick(),subtext="in DeathGrip with " .. dgply:Nick(),color=bgColor,lifetime=20})
+    if not sameteam then LocalPlayer().TeammatesDG = dgply end
+end
+
+hook.Add( "HUDDrawTargetID", "TA_DG_INFO", DeathGripCHInfo )
 hook.Add("TTTPrepareRound", "TTTDeathGrip", ResetDeathGrip)
+hook.Add( "TTTPrepareRound", "TTTShinigamiGUICleanUp", ClearEG )
+hook.Add( "TTTEndRound", "TTTShinigamiGUICleanUp", ClearEG )
 net.Receive("TTTDeathGrip", DeathGripCL)
 net.Receive("TTTDeathGripReset", ResetDeathGrip)
 net.Receive("TTTDeathGripMessage", DeathGripMessage)
 net.Receive("TTTShinigamiInfo", ShinigamiInfo)
 net.Receive("TTTDeathGripInfo", DeathGripInfo)
+net.Receive( "TTTDeathGripNotification", DeathGripNotification )

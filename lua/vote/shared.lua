@@ -1,3 +1,6 @@
+-- Create notification framework
+include( "enhancednotificationscore/shared.lua" )
+
 local files, _ = file.Find("vote/roles/*.lua", "LUA")
 
 for _, fil in pairs(files) do

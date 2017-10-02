@@ -1,3 +1,29 @@
+local function SameTeam( ply, ply_o )
+    if IsValid( ply ) and IsValid( ply_o ) and ply:IsActive() and ply:IsSpecial() and ply_o:IsSpecial() and ( ( ply.GetTeam and ply:GetTeam() == ply_o:GetTeam() ) or ( ply:GetRole() == ply_o:GetRole() ) ) and ply != ply_o then
+        return true
+    end
+    return false
+end
+
+local function GetAliveTeammemberTableDG( ply_o, dg )
+    local teammembers = {}
+    local players = player.GetAll()
+    if not players then return teammembers end
+    for _, ply in pairs( players ) do
+      if SameTeam(ply, ply_o) then
+          if dg then
+              if ply != ply_o.DeathGrip then
+                  table.insert(teammembers, ply)
+              end
+          else
+              table.insert(teammembers, ply)
+          end
+      end
+    end
+
+    return teammembers
+end
+
 local function SendDeathGrip(ply)
   net.Start("TTTDeathGrip")
   net.WriteEntity(ply.DeathGrip)
@@ -34,6 +60,26 @@ local function SendShinigamiInfo(ply)
   net.Send(ply)
 end
 
+local function SendDeathGripNotification( ply1, ply2 )
+    if not GetConVar( "ttt_deathgrip_notification" ):GetBool() then return end
+    
+    if ply1:IsSpecial() then
+        net.Start( "TTTDeathGripNotification" )
+        net.WriteEntity( ply1 )
+        net.WriteEntity( ply2 )
+        net.WriteBool(SameTeam(ply1, ply2))
+        net.Send( GetAliveTeammemberTableDG( ply1, true ) )
+    end
+
+    if not SameTeam( ply1, ply2 ) then
+        net.Start( "TTTDeathGripNotification" )
+        net.WriteEntity( ply2 )
+        net.WriteEntity( ply1 )
+        net.WriteBool(SameTeam(ply1, ply2))
+        net.Send( GetAliveTeammemberTableDG( ply2, true ) )
+    end
+end
+
 local function SelectDeathGripPlayers()
   timer.Simple(0.1, function()
     local aliveplayers = util.GetAlivePlayers()
@@ -62,6 +108,8 @@ local function SelectDeathGripPlayers()
         SendDeathGrip(pick)
         SendDeathGrip(pick2)
         SendDeathGripInfo()
+
+        SendDeathGripNotification( pick, pick2 )
       end
     end
   end)

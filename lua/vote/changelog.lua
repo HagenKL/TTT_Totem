@@ -16,7 +16,7 @@ It will get updated every time I have time to change something!<br>
 
 <h2>Version 1.2 (04/10/2017):</h2>
 
-- Added all the features from the addon <b> TTT Totem Additions </b> ( by tkindanigh / saibotk ): <br>
+- Added all the features from the addon <b> TTT Totem Additions </b> ( by tkindanight / saibotk ): <br>
 <div style=" text-align: left; margin-left: 15px;"> - A hint on the right side (Shinigami icon), to show that there is a Shinigami active in this round. <br>
 - Added a notification for all teammates, to tell them who you are in a DeathGrip with. <br>
 - Added a hint above your crosshair, if you're aiming on a player, who is in a DeathGrip with you or one of your teammate. <br>

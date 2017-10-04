@@ -25,6 +25,11 @@ Man kann den Totemhunter durch den Command "ttt_hunter_enabled 0" ausschalten.
 Man kann den Jackal durch den Command "ttt_jackal_enabled 0" ausschalten.  
 Man kann den Shinigami durch den Command "ttt_shinigami_enabled 0" ausschalten.  
 
+Man kann die DeathGrip Benachrichtigung durch den Command "ttt_deathgrip_notification 0" ausschalten.  
+Man kann den Shinigami Hinweis durch den Command "ttt_shinigami_hint 0" ausschalten.  
+Man kann die DeathGrip Warnung am Crosshair durch den Command "ttt_deathgrip_ch_warning 0" ausschalten.  
+Man kann das Shinigami GUI durch den Command "ttt_shinigami_gui 0" ausschalten.  
+
 ### History / Additional information:
 
 The old commit history can be found [here](https://github.com/GamefreakDE/gmod_addons).

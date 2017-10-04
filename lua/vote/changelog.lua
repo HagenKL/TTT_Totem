@@ -14,6 +14,17 @@ This is the Changelog for Gamefreaks Addons! (Started Documenting 05/26/2017)<br
 This will only get shown once a day! <br>
 It will get updated every time I have time to change something!<br>
 
+<h2>Version 1.2 (04/10/2017):</h2>
+
+- Added all the features from the addon <b> TTT Totem Additions </b> ( by tkindanigh / saibotk ): <br>
+<div style=" text-align: left; margin-left: 15px;"> - A hint on the right side (Shinigami icon), to show that there is a Shinigami active in this round. <br>
+- Added a notification for all teammates, to tell them who you are in a DeathGrip with. <br>
+- Added a hint above your crosshair, if you're aiming on a player, who is in a DeathGrip with you or one of your teammate. <br>
+- Added a GUI for the active Shinigami, displaying all the traitor's names in red boxes at the bottom of your screen. <br> </div>
+- Fixed a bug, where the Totemhunter did not get credits for kills. <br>
+- Fixed a bug, where the Shinigami was able to vote when in "Shinigamimode". <br>
+- General bugfixes / performance improvements. <br>
+
 <h2>Version 1.1.2 (13/08/2017):</h2>
 
 - Added a fellow for the Jackal: <b> Sidekick </b> <br>

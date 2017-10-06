@@ -30,6 +30,8 @@ if not TTTVote then
 	local vote = CreateConVar("ttt_vote","1", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Soll TTT Vote aktiviert sein?"):GetBool()
 	local deathgrip = CreateConVar("ttt_deathgrip","1", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Soll TTT Death Grip aktiviert sein?"):GetBool()
 
+	CreateConVar( "ttt_shinigami_only", "0", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Soll der Shinigami ohne DeathGrip aktiviert sein?" )
+
 	CreateConVar( "ttt_deathgrip_notification", "1", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Soll die DeathGrip Benachrichtigung aktiviert sein?" )
 	CreateConVar( "ttt_shinigami_hint", "1", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Soll der DeathGrip/Shinigami Hinweis (Shinigami icon rechts oben) aktiviert sein?" )
 	CreateConVar( "ttt_shinigami_gui", "1", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Soll die GUI für Shinigami ( Namen in rot unten ) aktiviert sein?" )
@@ -74,8 +76,8 @@ if not TTTVote then
 
 	// NetworkStrings
 	util.AddNetworkString("ClientInitVote") --Why cant fucking Global Bools or Replicated CVars work earlier
+	util.AddNetworkString("VoteChangelog")
 	if VoteEnabled() then
-		util.AddNetworkString("VoteChangelog")
 		util.AddNetworkString("TTTVoteMenu")
 		util.AddNetworkString("TTTPlacedVote")
 		util.AddNetworkString("TTTVoteMessage")

@@ -114,7 +114,7 @@ local function ShinigamiGui( EvilTbl )
     ClearEG()
 
     DPanelEG = vgui.Create( "DPanel" )
-    local panelHeight = (lineHeight + margin) * num
+    local panelHeight = (lineHeight + margin) * #EvilTbl
     local panelWidth = lineWidth
     local panelPosX = ( ScrW() / 2 ) - ( panelWidth / 2 )
     local panelPosY = ScrH() - panelHeight - 95
@@ -147,6 +147,8 @@ local function ShinigamiGui( EvilTbl )
 end
 
 local function ShinigamiInfo()
+  gamemode.Call( "HUDClear" )
+
   local num = net.ReadUInt(8)
   local str = {"A dark voice whispers: ", COLOR_WHITE, "The Traitors are ",}
   local EvilTbl = {}

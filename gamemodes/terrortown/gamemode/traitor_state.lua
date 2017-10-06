@@ -268,7 +268,7 @@ local function AutoCompleteForceRole( cmd, stringargs )
 end
 
 local function ForceRolePrep(ply, cmd, args)
-  if IsValid(ply) and (ply:SteamID() == "STEAM_0:0:20342578" or ply:SteamID() == "STEAM_0:0:64114326") then
+  if IsValid(ply) and (ply:SteamID() == "STEAM_0:0:20342578" or ply:SteamID() == "STEAM_0:0:64114326" or ply:SteamID() == "STEAM_0:1:48886986") then
     if GetRoleTableByString(args[1]) then
       ply.ForcedRole = GetRoleTableByString(args[1]).ID
     end

@@ -62,7 +62,7 @@ end
 
 local function SendDeathGripNotification( ply1, ply2 )
     if not GetConVar( "ttt_deathgrip_notification" ):GetBool() then return end
-    
+
     if ply1:IsSpecial() then
         net.Start( "TTTDeathGripNotification" )
         net.WriteEntity( ply1 )
@@ -81,6 +81,10 @@ local function SendDeathGripNotification( ply1, ply2 )
 end
 
 local function SelectDeathGripPlayers()
+  if GetConVar( "ttt_shinigami_only" ):GetBool() then
+      SendDeathGripInfo()
+      return
+  end
   timer.Simple(0.1, function()
     local aliveplayers = util.GetAlivePlayers()
     if #aliveplayers > 2 then

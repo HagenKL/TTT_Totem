@@ -14,6 +14,13 @@ This is the Changelog for Gamefreaks Addons! (Started Documenting 05/26/2017)<br
 This will only get shown once a day! <br>
 It will get updated every time I have time to change something!<br>
 
+<h2>Version 1.2.1 (06/10/2017):</h2>
+
+- Fixed ConVar errors. <br>
+- Fixed the changelog not being displayed. <br>
+- Added a new ConVar to deactivate DeathGrip, but still have a Shinigami. Set ttt_shinigami_only 1 <br>
+- Fixed a bug, that caused a red overlay to be displayed if the shinigami was killed by a headshot before. <br>
+
 <h2>Version 1.2 (04/10/2017):</h2>
 
 - Added all the features from the addon <b> TTT Totem Additions </b> ( by tkindanight / saibotk ): <br>

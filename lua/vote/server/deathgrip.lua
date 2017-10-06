@@ -81,10 +81,6 @@ local function SendDeathGripNotification( ply1, ply2 )
 end
 
 local function SelectDeathGripPlayers()
-  if GetConVar( "ttt_shinigami_only" ):GetBool() then
-      SendDeathGripInfo()
-      return
-  end
   timer.Simple(0.1, function()
     local aliveplayers = util.GetAlivePlayers()
     if #aliveplayers > 2 then
@@ -97,7 +93,7 @@ local function SelectDeathGripPlayers()
           break
         end
       end
-      if val then
+      if val and not GetConVar( "ttt_shinigami_only" ):GetBool() then
         local index = math.random(1, #aliveplayers)
         local pick = aliveplayers[index]
         table.remove(aliveplayers, index)
@@ -114,6 +110,8 @@ local function SelectDeathGripPlayers()
         SendDeathGripInfo()
 
         SendDeathGripNotification( pick, pick2 )
+    elseif val and GetConVar( "ttt_shinigami_only" ):GetBool() then
+        SendDeathGripInfo()
       end
     end
   end)

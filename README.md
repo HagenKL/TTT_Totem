@@ -25,6 +25,8 @@ Man kann den Totemhunter durch den Command "ttt_hunter_enabled 0" ausschalten.
 Man kann den Jackal durch den Command "ttt_jackal_enabled 0" ausschalten.  
 Man kann den Shinigami durch den Command "ttt_shinigami_enabled 0" ausschalten.  
 
+Man kann nur den DeathGrip deaktiviern und den Shinigami behalten mit dem Command "ttt_shinigami_only 1". 
+
 Man kann die DeathGrip Benachrichtigung durch den Command "ttt_deathgrip_notification 0" ausschalten.  
 Man kann den Shinigami Hinweis durch den Command "ttt_shinigami_hint 0" ausschalten.  
 Man kann die DeathGrip Warnung am Crosshair durch den Command "ttt_deathgrip_ch_warning 0" ausschalten.  

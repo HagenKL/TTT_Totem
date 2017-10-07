@@ -168,7 +168,7 @@ end
 local eqframe = nil
 local function TraitorMenuPopup()
    local ply = LocalPlayer()
-   if not IsValid(ply) or not ply:GetRoleTable().HasShop then
+   if not IsValid(ply) or not ply:GetRoleTable().HasShop or not ply:IsTerror() then
       return
    end
 

@@ -1,5 +1,5 @@
 local function SameTeam( ply, ply_o )
-    if IsValid( ply ) and IsValid( ply_o ) and ply:IsActive() and ply:IsSpecial() and ply_o:IsSpecial() and ( ( ply.GetTeam and ply:GetTeam() == ply_o:GetTeam() ) or ( ply:GetRole() == ply_o:GetRole() ) ) and ply != ply_o then
+    if IsValid( ply ) and IsValid( ply_o ) and ply:IsActive() and ply:IsSpecial() and ply_o:IsSpecial() and ( ( ply.GetTeam and ply:GetTeam() == ply_o:GetTeam() ) or ( ply:GetRole() == ply_o:GetRole() ) ) and ply != ply_o and not ply:GetShinigami() then
         return true
     end
     return false

@@ -163,15 +163,19 @@ local function BreakDeathGrip(ply)
     end)
     ply.NOWINSHINI = false
     if !ply.ShinigamiRespawned then
+      ply.NOWINSHINI = true
       timer.Simple(0.15, function()
         ply:SpawnForRound(true)
-        SendShinigamiInfo(ply)
         ply.ShinigamiRespawned = true
-        ply.NOWINSHINI = true
-        ply.ShiniDamage = 1
-        ply:StripWeapons()
-        ply:Give("weapon_ttt_shinigamiknife")
-        ply:SelectWeapon("weapon_ttt_shinigamiknife")
+        if ply:IsTerror() then
+          SendShinigamiInfo(ply)
+          ply.ShiniDamage = 1
+          ply:StripWeapons()
+          ply:Give("weapon_ttt_shinigamiknife")
+          ply:SelectWeapon("weapon_ttt_shinigamiknife")
+        else
+          ply.NOWINSHINI = false
+        end
       end)
       return
     end

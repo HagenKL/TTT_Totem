@@ -146,6 +146,7 @@ TTTRoles = TTTRoles or {
     AllowTeamChat = true,
     RepeatingCredits = false,
     CanCollectCredits = true,
+    ShowRole = function() return true end,
     HasShop = true
   }
 }

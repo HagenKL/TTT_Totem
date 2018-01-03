@@ -110,6 +110,14 @@ function SendInnocentList(ply_or_rf)
    local traitor_ids = {}
    local neutral_ids = {}
    for k, v in pairs(player.GetAll()) do
+      if v:GetRoleTable().ShowRole then
+        net.Start("TTT_RoleList")
+        net.WriteUInt(v:GetRole(),4)
+        net.WriteUInt(1,8)
+        net.WriteUInt(v:EntIndex() - 1,7)
+        net.Broadcast()
+        continue
+      end
       if v:IsGood() or (v:GetRoleTable().FakeRole and IsRoleGood(v:GetRoleTable().FakeRole(v))) then
         table.insert(inno_ids, v:EntIndex())
       end

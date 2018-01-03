@@ -2,6 +2,8 @@
 
 AddCSLuaFile()
 
+DEFINE_BASECLASS "weapon_tttbase"
+
 SWEP.HoldType               = "pistol"
 
 if CLIENT then
@@ -167,6 +169,7 @@ local ent_diff_time = CurTime()
 
 local stand_time = 0
 function SWEP:Think()
+   BaseClass.Think(self)
    if not self:CheckValidity() then return end
 
    -- If we are too far from our object, force a drop. To avoid doing this
@@ -193,9 +196,9 @@ function SWEP:Think()
       stand_time = CurTime() + 0.1
    end
 
-   self.CarryHack:SetPos(self.Owner:EyePos() + self.Owner:GetAimVector() * 70)
+   self.CarryHack:SetPos(self:GetOwner():EyePos() + self:GetOwner():GetAimVector() * 70)
 
-   self.CarryHack:SetAngles(self.Owner:GetAngles())
+   self.CarryHack:SetAngles(self:GetOwner():GetAngles())
 
    self.EntHolding:PhysWake()
 end
@@ -276,7 +279,7 @@ function SWEP:DoAttack(pickup)
       return
    end
 
-   local ply = self.Owner
+   local ply = self:GetOwner()
 
    local trace = ply:GetEyeTrace(MASK_SHOT)
    if IsValid(trace.Entity) then
@@ -347,7 +350,7 @@ end
 function SWEP:Pickup()
    if CLIENT or IsValid(self.EntHolding) then return end
 
-   local ply = self.Owner
+   local ply = self:GetOwner()
    local trace = ply:GetEyeTrace(MASK_SHOT)
    local ent = trace.Entity
    self.EntHolding = ent
@@ -372,7 +375,7 @@ function SWEP:Pickup()
          self.CarryHack:SetSolid(SOLID_NONE)
 
          -- set the desired angles before adding the constraint
-         self.CarryHack:SetAngles(self.Owner:GetAngles())
+         self.CarryHack:SetAngles(self:GetOwner():GetAngles())
 
          self.CarryHack:Spawn()
 
@@ -417,7 +420,7 @@ end
 
 local down = Vector(0, 0, -1)
 function SWEP:AllowEntityDrop()
-   local ply = self.Owner
+   local ply = self:GetOwner()
    local ent = self.CarryHack
    if (not IsValid(ply)) or (not IsValid(ent)) then return false end
 
@@ -446,7 +449,7 @@ function SWEP:Drop()
          phys:EnableDrag(true)
          phys:EnableMotion(true)
          phys:Wake()
-         phys:ApplyForceCenter(self.Owner:GetAimVector() * 500)
+         phys:ApplyForceCenter(self:GetOwner():GetAimVector() * 500)
 
          phys:ClearGameFlag(FVPHYSICS_PLAYER_HELD)
          phys:AddGameFlag(FVPHYSICS_WAS_THROWN)
@@ -457,7 +460,7 @@ function SWEP:Drop()
          KillVelocity(ent)
       end
 
-      ent:SetPhysicsAttacker(self.Owner)
+      ent:SetPhysicsAttacker(self:GetOwner())
 
    end
 
@@ -480,10 +483,10 @@ end
 
 function SWEP:PinRagdoll()
    if not pin_rag:GetBool() then return end
-   if (not self.Owner:IsEvil()) and (not pin_rag_inno:GetBool()) then return end
+   if (not self:GetOwner():IsEvil()) and (not pin_rag_inno:GetBool()) then return end
 
    local rag = self.EntHolding
-   local ply = self.Owner
+   local ply = self:GetOwner()
 
    local tr = util.TraceLine({start  = ply:EyePos(),
                               endpos = ply:EyePos() + (ply:GetAimVector() * PIN_RAG_RANGE),

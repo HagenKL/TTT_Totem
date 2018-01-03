@@ -123,7 +123,7 @@ function SendInnocentList(ply_or_rf)
 
    -- traitors get actual innocent, so they do not reset their traitor mates to
    -- innocence
-   local buffer = table.Add(table.Copy(inno_ids), traitor_ids)
+   local buffer = table.Add(table.Copy(inno_ids), table.Copy(traitor_ids))
    table.Shuffle(buffer)
    SendRoleListMessage(ROLE_INNOCENT, buffer, GetNeutralFilter())
    table.Add(inno_ids, neutral_ids)

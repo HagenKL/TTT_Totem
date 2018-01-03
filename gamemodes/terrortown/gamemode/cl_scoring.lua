@@ -579,7 +579,7 @@ function CLSCORE:ReportEvents(events)
    self:ShowPanel()
 end
 
-function CLSCORE:Reopen()
+function CLSCORE:Toggle()
    if IsValid(self.Panel) then
       self.Panel:ToggleVisible()
    end

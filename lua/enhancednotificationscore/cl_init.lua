@@ -108,7 +108,20 @@ end
 -- Returns:     String
 -------------------------------------------------------------------------------
 function ENHANCED_NOTIFICATIONS:GetVersion()
-    return "1.1.2"
+    return "1.2.0"
+end
+
+-------------------------------------------------------------------------------
+-- Just some local helper functions
+-- Signature:   relH( num ) / relW( num )
+-- Description: Returns the height / width relative to a FullHD num to the current display size.
+-- Returns:     Number
+-------------------------------------------------------------------------------
+local function relH( num )
+	return (num / 1080) * ScrH()
+end
+local function relW( num )
+	return (num / 1920) * ScrW()
 end
 
 -------------------------------------------------------------------------------
@@ -121,8 +134,10 @@ function ENHANCED_NOTIFICATIONS:CreateNotificationElement( title, color, subtext
     local notif = vgui.Create( "DNotify" )
 
     -- Set default values for sizes / positions
+		local margin, marginimage = 5, 10
     local w, h = 300, 74
-    local posXTitle, posYTitle = 80, 5
+		-- set defaults these will be overriden.
+    local posXTitle, posYTitle = 80, margin
     local sizeXTitle, sizeYTitle = 215, 32
     local posXSub, posYSub = 80, 37
     local sizeXSub, sizeYSub = 215, 32
@@ -132,16 +147,8 @@ function ENHANCED_NOTIFICATIONS:CreateNotificationElement( title, color, subtext
         w = 74
         h = 74
     elseif image and ( title or subtext ) then
-        w = 300
         h = 74
-
-        posXTitle, posYTitle = 80, 5
-        sizeXTitle, sizeYTitle = 215, 32
-
-        posXSub, posYSub = 80, 37
-        sizeXSub, sizeYSub = 215, 32
     elseif not image then
-        w = 300
         h = 74
         -- Only title:
         if not subtext and title then
@@ -153,6 +160,14 @@ function ENHANCED_NOTIFICATIONS:CreateNotificationElement( title, color, subtext
         posXSub, posYSub = 16, 37
         sizeXSub, sizeYSub = 284, 32
     end
+
+		-- TODO Add selection for different screen Sizes like < 1080p = Font size 11
+		-- generally watch sizes and have max / min sizes
+		local tw, _ = surface.GetTextSize(title)
+		if tw > w then
+			w = tw + margin * 2;
+			sizeXTitle = tw
+		end
 
     notif:SetSize( w, h )
 
@@ -166,8 +181,8 @@ function ENHANCED_NOTIFICATIONS:CreateNotificationElement( title, color, subtext
     -- Add icon GUI element
     if image then
         local img = vgui.Create( "DImage", bg )
-        img:SetPos( 5, 5 )
-        img:SetSize( 64, 64 )
+        img:SetPos( relH(margin), relW(margin) )
+        img:SetSize( relH(h - marginimage), relH(h - marginimage) )
         img:SetImage( image )
     end
 
@@ -175,7 +190,7 @@ function ENHANCED_NOTIFICATIONS:CreateNotificationElement( title, color, subtext
     if title then
         local lblTitle = vgui.Create( "DLabel", bg )
         lblTitle:SetPos( posXTitle, posYTitle )
-        lblTitle:SetSize( 215, 32 )
+        lblTitle:SetSize( sizeXTitle, sizeYTitle )
         lblTitle:SetText( title )
         lblTitle:SetTextColor( Color( 255, 250, 250 ) )
         lblTitle:SetFont( "Trebuchet24" )

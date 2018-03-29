@@ -177,7 +177,7 @@ end
 local function PunishtheInnocents()
   for k,v in pairs(player.GetAll()) do
     if v:IsTerror() and v.VotePunishment then
-      v:SetHealth(v:GetMaxHealth() - 10)
+      v:SetHealth(v:GetMaxHealth() - 30)
       v.VotePunishment = false
     end
   end

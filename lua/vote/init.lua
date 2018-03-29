@@ -47,7 +47,7 @@ if not TTTVote then
 
 	function DeathGripEnabled() return GetGlobalBool("ttt_deathgrip", false) end
 
-	// Execute Files
+	-- Execute Files
 	include("vote/shared/vote_overrides_shd.lua")
 	include("vote/shared/player.lua")
 	if VoteEnabled() then
@@ -76,6 +76,7 @@ if not TTTVote then
 
 	// NetworkStrings
 	util.AddNetworkString("ClientInitVote") --Why cant fucking Global Bools or Replicated CVars work earlier
+	util.AddNetworkString("TTTLoadRoleInit")
 	util.AddNetworkString("VoteChangelog")
 	if VoteEnabled() then
 		util.AddNetworkString("TTTVoteMenu")
@@ -108,6 +109,12 @@ if not TTTVote then
 		net.WriteBool(VoteEnabled())
 		net.WriteBool(DeathGripEnabled())
 		net.WriteBool(TotemEnabled())
+		net.Send(ply)
+	end)
+
+	hook.Add("PlayerInitialSpawn", "TTTLoadRoleInit", function(ply)
+		net.Start("TTTLoadRoleInit")
+		net.WriteTable(init_files_roles or nil)
 		net.Send(ply)
 	end)
 end

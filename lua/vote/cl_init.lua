@@ -21,13 +21,22 @@ if not TTTVote then
     SetGlobalBool("ttt_deathgrip", net.ReadBool())
     SetGlobalBool("ttt_totem", net.ReadBool())
 
-    if DeathGripEnabled() then
-      include("vote/client/cl_deathgrip.lua")
-    end
-    include("vote/shared/vote_overrides_shd.lua")
-    include("vote/shared/player.lua")
-    include("vote/client/cl_halos.lua")
-    include("vote/client/cl_messages.lua")
-    include("vote/client/cl_menu.lua")
-  end)
+		if DeathGripEnabled() then
+			include("vote/client/cl_deathgrip.lua")
+		end
+		include("vote/shared/vote_overrides_shd.lua")
+		include("vote/shared/player.lua")
+		include("vote/client/cl_halos.lua")
+		include("vote/client/cl_messages.lua")
+		include("vote/client/cl_menu.lua")
+	end)
+
+	net.Receive("TTTLoadRoleInit", function()
+		local tbl = net.ReadTable()
+		if tbl then
+			for _, s in ipairs(tbl) do
+				include(s)
+			end
+		end
+	end)
 end

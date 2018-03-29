@@ -636,6 +636,14 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
       PlayDeathSound(ply)
    end
 
+   if GetRoundState() == ROUND_PREP then
+	   timer.Create("respawndelayprep", 0.1, 0, function() --seems to be a slight delay from when you leave spec and when you can spawn this should get us around that
+                    if rag then rag:Remove() end
+                    ply:SpawnForRound( true )
+                    if ply:Alive() then timer.Destroy("respawndelayprep") return end
+                end)
+   end
+
    --- Credits
 
    CheckCreditAward(ply, attacker)

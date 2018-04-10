@@ -46,8 +46,9 @@ local function SendDeathGripInfo()
 end
 
 local function SendShinigamiInfo(ply)
+  SendEvilList(ply)
   local tbl = {}
-  for k,v in pairs(player.GetAll()) do
+  for k,v in pairs(util.GetAlivePlayers()) do
     if v:GetEvil() then
       table.insert(tbl,v:Nick())
     end
@@ -137,12 +138,24 @@ local function DeathGrip(ply, inflictor, attacker)
       ply.DeathGrip = nil
   end
   if attacker:IsPlayer() and attacker:GetShinigami() and attacker.ShinigamiRespawned and ply:GetGood() then
+	-- TODO Feedback, das man keine innos töten soll
     local dmginfo = DamageInfo()
     dmginfo:SetDamage(10000)
     dmginfo:SetAttacker(game.GetWorld())
     dmginfo:SetDamageType(DMG_GENERIC)
     attacker:TakeDamageInfo(dmginfo) // kill the other guy
   end
+end
+
+local function ShinigamiTListUpdate(ply)
+	if ( ply:GetEvil() ) then
+		for _, v in pairs( util.GetAlivePlayers() ) do
+			if( v:GetShinigami() and v.ShinigamiRespawned ) then
+				SendShinigamiInfo(v)
+				break
+			end
+		end
+	end
 end
 
 local function FindCorpse(ply) -- From TTT Ulx Commands, sorry
@@ -229,6 +242,7 @@ local function TTTSetShinigami(ply)
   end
 end
 
+-- TODO optimize!
 local function ShinigamiDamage()
 	if GetRoundState() == ROUND_ACTIVE then
 		for k,v in pairs(player.GetAll()) do
@@ -244,6 +258,7 @@ hook.Add("PlayerSpawn", "TTTSetShinigami", TTTSetShinigami)
 hook.Add("PlayerDisconnected", "TTTRemoveDeathGrip", TTTRemoveDeathGrip)
 hook.Add("PlayerCanPickupWeapon", "TTTShinigamiPrevent", PreventShinigamiPickUp)
 hook.Add("PostPlayerDeath","TTTDeathGrip", BreakDeathGrip)
+hook.Add("PostPlayerDeath", "TTTShinigamiTListUpdate", ShinigamiTListUpdate)
 hook.Add("PlayerDeath", "TTTDeathGrip", DeathGrip)
 hook.Add("TTTBeginRound", "TTTDeathGrip", SelectDeathGripPlayers)
 hook.Add("TTTPrepareRound", "TTTDeathGrip", ResetDeathGrips)

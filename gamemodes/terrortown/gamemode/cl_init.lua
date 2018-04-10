@@ -203,6 +203,8 @@ local function ReceiveRole()
 
    client:SetRole(role)
 
+   hook.Run("TTTReceiveRole")
+   
    Msg("You are: ")
    MsgN(string.upper(client:GetRoleTable().String))
 end

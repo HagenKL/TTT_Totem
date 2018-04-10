@@ -92,7 +92,7 @@ function bind.Add( btn, name, pers )
 	end
 
 	table.insert(Bindings[ btn ], name)
-	if(pers) then
+	if pers then
 		SaveBinding( name, btn )
 	end
 end

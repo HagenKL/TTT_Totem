@@ -17,7 +17,8 @@ It will get updated every time I have time to change something!<br>
 <h2>Version 1.3 (09/03/2018):</h2>
 
 - Updated TTT version to commit f70ab893ad21ddf9f11bf41f4a29badf9faaa0bf <br>
-- Updated Enhanced Notification Framework
+- Updated Enhanced Notification Framework<br>
+- A wrong vote now will let you lose 30 HP on the next round<br>
 - Reworked Role loading mechanic, to ensure that server and client are loading the roles in the same order. <br>
 - Added an equipment GUI, indicating what passive items you own. <br>
 - Added a tab to the F1 menu "Totem"<br>

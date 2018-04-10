@@ -13,9 +13,9 @@ hook.Add( "HUDPaint", "TTTEnhancementsEquipHUD", function()
 			local passive = GetEquipmentItem(ply:GetRole(), equipnum)
 			if (not passive) then break end
 			if( passive.hud_material ) then
-				surface.SetMaterial( Material(passive.hud_material .. ".vmt") )
+				surface.SetMaterial( Material(passive.hud_material) )
 			else
-				surface.SetMaterial( Material(passive.material .. ".vmt") )
+				surface.SetMaterial( Material(passive.material) )
 			end
 			surface.DrawTexturedRect( margin + (size + spaces) * count, ScrH() - 150 - size - margin, size, size )
 			count = count + 1

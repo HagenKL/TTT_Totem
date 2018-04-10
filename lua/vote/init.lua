@@ -2,6 +2,7 @@ if not TTTVote then
 	TTTVote = {}
 	file.CreateDir( "vote" )
 
+	AddCSLuaFile("vote/vgui/AnimatedImage.lua")
 	AddCSLuaFile("bind/cl_bind.lua")
 	AddCSLuaFile("vote/shared/vote_overrides_shd.lua")
 	AddCSLuaFile("vote/shared/player.lua")

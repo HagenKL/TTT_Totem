@@ -5,6 +5,7 @@ if not TTTVote then
 	AddCSLuaFile("bind/cl_bind.lua")
 	AddCSLuaFile("vote/shared/vote_overrides_shd.lua")
 	AddCSLuaFile("vote/shared/player.lua")
+	AddCSLuaFile("vote/client/cl_visuals.lua")
 	AddCSLuaFile("vote/client/cl_halos.lua")
 	AddCSLuaFile("vote/client/cl_menu.lua")
 	AddCSLuaFile("vote/client/cl_changelog.lua")
@@ -25,6 +26,9 @@ if not TTTVote then
 	resource.AddFile("materials/vgui/ttt/icon_side.vmt")
 	resource.AddFile("materials/vgui/ttt/sprite_side.vmt")
 
+	resource.AddFile("materials/vgui/ttt/dg_start.vmt")
+	resource.AddFile("materials/vgui/ttt/death_grip_break.vmt")
+
 	// Convars
 	CreateConVar("ttt_startvotes","5",{FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Setze die Anzahl an Votes mit der jeder startet.")
 
@@ -34,6 +38,9 @@ if not TTTVote then
 
 	CreateConVar( "ttt_shinigami_only", "0", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Soll der Shinigami ohne DeathGrip aktiviert sein?" )
 
+	-- Additional:
+
+	-- SERVERSIDE
 	CreateConVar( "ttt_deathgrip_notification", "1", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Soll die DeathGrip Benachrichtigung aktiviert sein?" )
 	CreateConVar( "ttt_shinigami_hint", "1", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Soll der DeathGrip/Shinigami Hinweis (Shinigami icon rechts oben) aktiviert sein?" )
 	CreateConVar( "ttt_shinigami_gui", "1", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Soll die GUI für Shinigami ( Namen in rot unten ) aktiviert sein?" )

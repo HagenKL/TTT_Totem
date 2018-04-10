@@ -1,0 +1,23 @@
+"UnlitGeneric"
+{
+	"$basetexture" "vgui/ttt/death_grip_sealing"
+	"$nocull" 1
+	"$ignorez" 1
+	"$nodecal" 1
+	"$nolod" 1
+	"$vertexcolor" 	1
+	"$vertexalpha" 	1
+	"$translucent" 1
+
+    "$frame" "0"
+
+    "Proxies"
+    {
+          "MaterialModifyAnimated"
+          {
+                "animatedtexturevar" "$basetexture"
+                "animatedtextureframenumvar" "$frame"
+                "animatedtextureframerate" "8"
+          }
+    }
+}

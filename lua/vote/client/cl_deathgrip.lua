@@ -79,6 +79,7 @@ end
 local function DeathGripCL()
   local ply = net.ReadEntity()
   LocalPlayer().DeathGrip = ply -- set buddy
+  vis_DeathGrip_start()
   hook.Add("HUDPaint", "DeathGripHUD", DeathGripHUD)
 end
 
@@ -89,17 +90,20 @@ local function ClearEG()
 end
 
 local function ResetDeathGrip()
+  print("[DEBUG:TOTEM] DEATHGRIP RESET CALLED")
   LocalPlayer().DeathGrip = nil // Reset
   if LocalPlayer().TeammatesDG then LocalPlayer().TeammatesDG = nil end
   if DPanelGH and IsValid( DPanelGH ) then
     DPanelGH:Remove()
   end
+
   hook.Remove("HUDPaint", "DeathGripHUD")
 end
 
 local function DeathGripMessage()
   chat.AddText("TTT Death Grip: ", COLOR_WHITE, "The Death Grip got broken, two players are dead!")
   chat.PlaySound()
+  vis_DeathGrip_break()
 end
 
 local function ShinigamiGui( EvilTbl )
@@ -130,7 +134,7 @@ local function ShinigamiGui( EvilTbl )
         local pan = vgui.Create( "DPanel", DPanelEG )
         pan:SetPos( 0, ( lineHeight + margin ) * (i - 1) )
         pan:SetSize( panelWidth, lineHeight )
-        pan:SetBackgroundColor( Color( 255, 0, 0, 170 ) )
+		pan:SetBackgroundColor( Color( 255, 0, 0, 170 ) )
 
         local lblPlayerNick = vgui.Create( "DLabel", pan )
         lblPlayerNick:SetText( ply )
@@ -265,7 +269,7 @@ end
 
 hook.Add( "HUDDrawTargetID", "TA_DG_INFO", DeathGripCHInfo )
 hook.Add( "HUDDrawTargetID", "TA_SHINI_TRAITOR", ShinigamiTraitorInfo )
-hook.Add("TTTPrepareRound", "TTTDeathGrip", ResetDeathGrip)
+hook.Add( "TTTPrepareRound", "TTTDeathGrip", ResetDeathGrip)
 hook.Add( "TTTPrepareRound", "TTTShinigamiGUICleanUp", ClearEG )
 hook.Add( "TTTEndRound", "TTTShinigamiGUICleanUp", ClearEG )
 net.Receive("TTTDeathGrip", DeathGripCL)

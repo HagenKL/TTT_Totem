@@ -21,6 +21,7 @@ if not TTTVote then
 	include("bind/cl_bind.lua")
 
 
+	include("vote/client/cl_visuals.lua")
 	include("vote/client/cl_changelog.lua")
 
 	net.Receive("ClientInitVote", function()

@@ -17,6 +17,7 @@ local Hunter = {  -- table to create new role
 	HasShop = true,
 	ShopFallBack = ROLE_TRAITOR, -- Falls back to normal shop items, eg. all traitor items
 	indicator_mat = Material("vgui/ttt/sprite_hunter"), -- Icon above head
+	roleBanner = Material("vgui/ttt/totemhunter.png"),
 	winning_team = WIN_TRAITOR, -- the team it wins with, available are "traitors" and "innocent"
 	drawtargetidcircle = true, -- should draw circle
 	AllowTeamChat = true, -- team chat

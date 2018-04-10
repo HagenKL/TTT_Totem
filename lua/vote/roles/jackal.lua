@@ -16,6 +16,7 @@ local Jackal = { -- table to create new role
 	IsGoodReplacement = false, -- Is Replacement for one traitor/detective
 	HasShop = true,
 	indicator_mat = Material("vgui/ttt/sprite_jackal"),
+	roleBanner = Material("vgui/ttt/jackal.png"),
 	ShopFallBack = ROLE_TRAITOR, -- Falls back to normal shop items, eg. all traitor items
 	--indicator_mat = Material("vgui/ttt/sprite_jackal"), -- Icon above head
 	newteam = true, -- the team it wins with, available are "traitors" and "innocent"

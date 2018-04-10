@@ -17,6 +17,7 @@ local Sidekick = {  -- table to create new role
 	HasShop = false,
 	IsGoodReplacement = false, -- Is Replacement for one traitor
 	indicator_mat = Material("vgui/ttt/sprite_side"),
+	roleBanner = Material("vgui/ttt/sidekick.png"),
 	ShopFallBack = false, -- Falls back to normal shop items, eg. all traitor items
 	winning_team = WIN_JACKAL, -- the team it wins with, available are "traitors" and "innocent"
 	drawtargetidcircle = true, -- should draw circle

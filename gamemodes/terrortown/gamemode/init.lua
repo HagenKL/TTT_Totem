@@ -39,6 +39,14 @@ AddCSLuaFile("vgui/sb_row.lua")
 AddCSLuaFile("vgui/sb_team.lua")
 AddCSLuaFile("vgui/sb_info.lua")
 
+-- Custom resources
+
+resource.AddFile("materials/vgui/ttt/innocent.png")
+resource.AddFile("materials/vgui/ttt/traitor.png")
+resource.AddFile("materials/vgui/ttt/detective.png")
+
+-- END CUSTOM RESOURCES
+
 include("shared.lua")
 
 include("karma.lua")

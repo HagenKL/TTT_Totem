@@ -27,8 +27,12 @@ if not TTTVote then
 	resource.AddFile("materials/vgui/ttt/icon_side.vmt")
 	resource.AddFile("materials/vgui/ttt/sprite_side.vmt")
 
-	resource.AddFile("materials/vgui/ttt/dg_start.vmt")
+	resource.AddFile("materials/vgui/ttt/death_grip_sealing.vmt")
 	resource.AddFile("materials/vgui/ttt/death_grip_break.vmt")
+	resource.AddFile("materials/vgui/ttt/jackal.png")
+	resource.AddFile("materials/vgui/ttt/sidekick.png")
+	resource.AddFile("materials/vgui/ttt/shinigami.png")
+	resource.AddFile("materials/vgui/ttt/totemhunter.png")
 
 	// Convars
 	CreateConVar("ttt_startvotes","5",{FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Setze die Anzahl an Votes mit der jeder startet.")

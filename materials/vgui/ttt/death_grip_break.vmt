@@ -10,14 +10,4 @@
 	"$translucent" 1
 
     "$frame" "0"
-
-    "Proxies"
-    {
-          "MaterialModifyAnimated"
-          {
-                "animatedtexturevar" "$basetexture"
-                "animatedtextureframenumvar" "$frame"
-                "animatedtextureframerate" "8"
-          }
-    }
 }

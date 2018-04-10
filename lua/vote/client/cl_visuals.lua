@@ -1,39 +1,60 @@
 function vis_DeathGrip_start()
-	local DImgDGS = vgui.Create("DImage")
-	local size = 200
+	local DImgDGS = vgui.Create("DAnimatedImage")
+	local size = 600
 	local yoffset = 100
-	local animyoffset = 100
+	local animyoffset = 50
 	DImgDGS:SetSize(size, size)
 	DImgDGS:SetPos(ScrW()/2 - size/2, ScrH()/2 - size/2 - yoffset - animyoffset)
-	DImgDGS:SetImage("vgui/ttt/dg_start", "vgui/avatar_default") --TODO ANIMATION
-	DImgDGS:AlphaTo( 255, 1 )
-	--DImgDGS:SizeTo( 25, 25, 2, 1 )
-	--DImgDGS:MoveTo( 10, ScrH() - 10, 2, 1, 2, function(tbl, pnl) pnl:Remove() end)
-	DImgDGS:MoveTo( ScrW()/2 - size/2, ScrH()/2 - size/2 - yoffset, 1, 0, 2)
-	DImgDGS:AlphaTo( 0, 1, 5, function(tbl, pnl) pnl:Remove() end )
+	DImgDGS:SetAlpha(0)
+	DImgDGS:AlphaTo( 255, 0.5 )
+	DImgDGS:MoveTo( ScrW()/2 - size/2, ScrH()/2 - size/2 - yoffset, 0.5, 0, 2)
+	DImgDGS:AlphaTo( 0, 1.3, 0.4, function(tbl, pnl) pnl:Remove() end )
+	local mat = Material("vgui/ttt/death_grip_sealing")
+	DImgDGS:SetMaterial(mat)
+	DImgDGS:SetFrames(8)
+	DImgDGS:StartAnim(0.9)
 end
---bind.Remove(24, "dgs")
-bind.Register("dgs", vis_DeathGrip_start)
+--bind.Remove(24, "dgb")
+--bind.Register("dgs", vis_DeathGrip_start)
 --bind.Add(24, "dgb", false)
 function vis_DeathGrip_break()
-	local DImg = vgui.Create("DImage")
-	local size = 400
+	local DImg = vgui.Create("DAnimatedImage")
+	local size = 600
 	local yoffset = 100
 	local animyoffset = 50
 	DImg:SetSize(size, size)
 	DImg:SetPos(ScrW()/2 - size/2, ScrH()/2 - size/2 - yoffset - animyoffset)
 	DImg:SetAlpha(0)
 	DImg:AlphaTo( 255, 0.5 )
-	--DImg:SizeTo( 25, 25, 2, 1 )
-	--DImg:MoveTo( 10, ScrH() - 10, 2, 1, 2, function(tbl, pnl) pnl:Remove() end)
 	DImg:MoveTo( ScrW()/2 - size/2, ScrH()/2 - size/2 - yoffset, 0.5, 0, 2)
-	DImg:AlphaTo( 0, 0.5, 0.4, function(tbl, pnl) pnl:Remove() end )
+	DImg:AlphaTo( 0, 1, 0.4, function(tbl, pnl) pnl:Remove() end )
 	local mat = Material("vgui/ttt/death_grip_break")
-	if mat then
-		mat:SetInt("$frame", 0)
-		mat:Recompute()
-		DImg:SetMaterial(mat)
-	end
-
+	DImg:SetMaterial(mat)
+	DImg:SetFrames(8)
+	DImg:StartAnim(0.9)
 end
-bind.Register("dgb", vis_DeathGrip_break)
+--bind.Register("dgb", vis_DeathGrip_break)
+
+function vis_GetRole()
+	local ply = LocalPlayer()
+	local banner = ply:GetRoleTable().roleBanner
+	if not banner or ply.visrecentrole == ply:GetRole() then
+		return
+	end
+	ply.visrecentrole = ply:GetRole()
+	local DImg = vgui.Create("DImage")
+	local size = 500
+	local yoffset = 60
+	local animyoffset = 40
+	DImg:SetSize(size, size)
+	DImg:SetPos(ScrW()/2 - size/2, ScrH()/2 - size/2 - yoffset - animyoffset)
+	DImg:SetAlpha(0)
+	DImg:AlphaTo( 255, 0.8 )
+	DImg:MoveTo( ScrW()/2 - size/2, ScrH()/2 - size/2 - yoffset, 0.3, 0, -200)
+	DImg:AlphaTo( 0, 1, 2.4, function(tbl, pnl) pnl:Remove() end )
+	DImg:SetMaterial(banner)
+end
+--bind.Register("gr", vis_GetRole)
+--bind.Remove(24, "gr")
+hook.Add("TTTReceiveRole", "TTTVisualsRoleRecv", vis_GetRole)
+hook.Add("TTTBeginRound", "TTTVisualsRoleRecvCleanup", function () LocalPlayer().visrecentrole = nil end)

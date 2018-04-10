@@ -78,7 +78,7 @@ end
 
 local function DeathGripCL()
   local ply = net.ReadEntity()
-  LocalPlayer().DeathGrip = ply // set buddy
+  LocalPlayer().DeathGrip = ply -- set buddy
   hook.Add("HUDPaint", "DeathGripHUD", DeathGripHUD)
 end
 
@@ -119,16 +119,11 @@ local function ShinigamiGui( EvilTbl )
     local panelPosX = ( ScrW() / 2 ) - ( panelWidth / 2 )
     local panelPosY = ScrH() - panelHeight - 95
 
-    DPanelEG:SetPos( panelPosX, panelPosY ) -- Set the position of the panel
+    DPanelEG:SetPos( panelPosX, ScrH() ) -- Set the position of the panel
     DPanelEG:SetSize( panelWidth, panelHeight ) -- Set the size of the panel
     DPanelEG:SetBackgroundColor( Color( 0, 0, 0, 0 ) )
-    --timer.Simple( 2, function()
-    --      function DPanelEG:Think()
-    --          if not LocalPlayer():IsActive() then
-    --              self:Remove()
-    --          end
-    --      end
-    -- end )
+	DPanelEG:AlphaTo (255, 0.4)
+	DPanelEG:MoveTo (panelPosX, panelPosY, 0.5)
 
     -- Create Labels
     for i, ply in pairs( EvilTbl ) do
@@ -147,7 +142,7 @@ local function ShinigamiGui( EvilTbl )
 end
 
 local function ShinigamiInfo()
-  gamemode.Call( "HUDClear" )
+  timer.Simple( 1, function() gamemode.Call( "HUDClear" ) end )
 
   local num = net.ReadUInt(8)
   local str = {"A dark voice whispers: ", COLOR_WHITE, "The Traitors are ",}
@@ -225,6 +220,39 @@ local function DeathGripCHInfo()
 
 end
 
+local function ShinigamiTraitorInfo()
+	local client = LocalPlayer()
+
+	if (not client:IsShinigami()) then
+		return
+	end
+
+	local trace = client:GetEyeTrace(MASK_SHOT)
+    local ent = trace.Entity
+    if (not IsValid(ent)) or ent.NoTarget then return end
+
+    local text = "KILL!!!"
+    local color = Color( 255, 0, 0, 255 )
+    local x = ScrW() / 2.0
+    local y = ScrH() / 2.0
+    surface.SetFont( "TargetID" )
+    local w, h = surface.GetTextSize( text )
+    x = x - w / 2
+    y = y - 50
+
+    if IsValid(ent:GetNWEntity("ttt_driver", nil)) then
+      ent = ent:GetNWEntity("ttt_driver", nil)
+      if ent == client then return end
+    end
+
+    if ent:IsPlayer() then
+      if not ent:GetNWBool("disguised", false) and ent:IsEvil() then
+        draw.SimpleText( text, "TargetID", x+1, y+1, COLOR_BLACK )
+        draw.SimpleText( text, "TargetID", x, y, color )
+      end
+    end
+end
+
 local function DeathGripNotification()
     -- Read sent information
     local ply = net.ReadEntity()
@@ -236,6 +264,7 @@ local function DeathGripNotification()
 end
 
 hook.Add( "HUDDrawTargetID", "TA_DG_INFO", DeathGripCHInfo )
+hook.Add( "HUDDrawTargetID", "TA_SHINI_TRAITOR", ShinigamiTraitorInfo )
 hook.Add("TTTPrepareRound", "TTTDeathGrip", ResetDeathGrip)
 hook.Add( "TTTPrepareRound", "TTTShinigamiGUICleanUp", ClearEG )
 hook.Add( "TTTEndRound", "TTTShinigamiGUICleanUp", ClearEG )

@@ -6,13 +6,31 @@
 
 <div style="width: 80%; margin: 0px auto; border: 10px solid #ffd5a5; background-color: #ededed; padding: 10px; font-size: 12px; font-family: Tahoma; margin-top: 30px; color: #818181; text-align: left;">
 
-<div style="font-size: 30px; font-family: impact; width: 100%; margin-bottom: 5px;">TTT Addons Changelog</div>
+<div style="font-size: 30px; font-family: impact; width: 100%; margin-bottom: 5px;">TTT Totem Changelog</div>
 
 <br>
 
-This is the Changelog for Gamefreaks Addons! (Started Documenting 05/26/2017)<br>
+This is the changelog for Gamefreaks Addons / Totem! (Started Documenting 05/26/2017)<br>
 This will only get shown once a day! <br>
 It will get updated every time I have time to change something!<br>
+
+<h2>Version 1.3 (09/03/2018):</h2>
+
+- Updated TTT version to commit f70ab893ad21ddf9f11bf41f4a29badf9faaa0bf <br>
+- Updated Enhanced Notification Framework
+- Reworked Role loading mechanic, to ensure that server and client are loading the roles in the same order. <br>
+- Added an equipment GUI, indicating what passive items you own. <br>
+- Added a tab to the F1 menu "Totem"<br>
+<div style=" text-align: left; margin-left: 15px;">
+	- Added buttons for binding the keys needed for Totem. <br>
+	- Added an option to place a totem automaticially when the round begins.<br>
+</div>
+- Possible fix for rare red overlay after shinigamis respawn. <br>
+- Added indicator above crosshair if the shinigami looks at traitors.<br>
+- Added instant respawn if you die in preparing<br>
+- Shinigami now actually receives roles of traitors, so they will be visible on the scoreboard.<br>
+- Shinigami traitor GUI now updates, as traitors die.<br>
+- Added small animations to Shinigami traitor GUI.<br>
 
 <h2>Version 1.2.1 (06/10/2017):</h2>
 

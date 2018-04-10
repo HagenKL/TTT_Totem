@@ -81,6 +81,9 @@ end
 local function SendRoleList(role, ply_or_rf, pred)
    local role_ids = {}
    for k, v in pairs(player.GetAll()) do
+	  if( v:GetShinigami() and v.ShinigamiRespawned and ply_or_rf and istable(ply_or_rf) ) then
+		  table.insert(ply_or_rf, v)
+	  end
       local tbl = v:GetRoleTable()
       local func = tbl and tbl.FakeRole and v:IsTerror() and tbl.FakeRole(v) == role
       if (v:IsRole(role) and !func) or (!v:IsRole(role) and func) then
@@ -205,7 +208,7 @@ local function request_rolelist(ply)
       SendRoleReset(ply)
       SendPlayerRole(ply)
       SendDetectiveList(ply)
-      if ply:GetEvil() then
+      if ply:GetEvil() or ( ply:GetShinigami() and ply.ShinigamiRespawned ) then
         SendEvilList(ply)
       elseif ply:GetNeutral() then
         SendNeutralList(ply)

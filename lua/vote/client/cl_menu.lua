@@ -1,5 +1,8 @@
 local votemenu = nil
 
+
+
+
 local function OpenVoteMenu()
   local frame = vgui.Create("DFrame")
   frame:SetSize(500,360)
@@ -102,10 +105,81 @@ end
   if votemenu and IsValid(votemenu) then votemenu:Close() end
 end*/
 
+local function SettingsTab(dtabs)
+	local dsettings = vgui.Create("DPanelList", dtabs)
+	local padding = dtabs:GetPadding()
+	dsettings:StretchToParent(0,0,padding,0)
+	dsettings:EnableVerticalScrollbar(true)
+	dsettings:SetPadding(10)
+	dsettings:SetSpacing(10)
+
+	local dgui = vgui.Create("DForm", dsettings)
+	dgui:SetName("Bindings") --TODO Add localization
+
+	-- Totem placement
+	local dTPlabel = vgui.Create("DLabel")
+	dTPlabel:SetText("Place Totem:")
+
+	local dTPBinder = vgui.Create("DBinder")
+	dTPBinder:SetSize( 170, 30 )
+	local curBindingT = bind.Find( "placetotem" )
+	dTPBinder:SetValue( curBindingT )
+
+	function dTPBinder:OnChange( num )
+		if( num == 0 ) then
+			bind.Remove( curBindingT, "placetotem" )
+		else
+			bind.Remove( curBindingT, "placetotem" )
+			bind.Add( num, "placetotem", true)
+			LocalPlayer():ChatPrint( "New bound key for placing a totem: "..input.GetKeyName( num ) )
+		end
+		curBindingT = num
+	end
+	dgui:AddItem(dTPlabel, dTPBinder)
+
+	-- Voting
+	local dVlabel = vgui.Create("DLabel")
+	dVlabel:SetText("Vote:")
+
+	local dVBinder = vgui.Create("DBinder")
+	dVBinder:SetSize( 170, 30 )
+	local curBindingV = bind.Find( "votemenu" )
+	dVBinder:SetValue( curBindingV )
+
+	function dVBinder:OnChange( num )
+		if( num == 0 ) then
+			bind.Remove( curBindingV, "votemenu" )
+		else
+			bind.Remove( curBindingV, "votemenu" )
+			bind.Add( num, "votemenu", true)
+			LocalPlayer():ChatPrint( "New bound key for voting: "..input.GetKeyName( num ) )
+		end
+		curBindingV = num
+	end
+	dgui:AddItem(dVlabel, dVBinder)
+
+	dsettings:AddItem(dgui)
+
+	local dguiT = vgui.Create("DForm", dsettings)
+	dguiT:SetName("Totem")
+
+	dguiT:CheckBox( "Automaticially try placing a Totem", "ttt_totem_auto" )
+
+	dsettings:AddItem(dguiT)
+
+	dtabs:AddSheet("Totem", dsettings, "icon16/wrench.png", false, false, "Totem Settings")
+end
+
 --concommand.Add("+votemenu", TTTVote.LookUpVoteMenu,nil,"Opens the vote menu", { FCVAR_DONTRECORD })
 --concommand.Add("-votemenu", TTTVote.CloseVoteMenu,nil,"Closes the vote menu", { FCVAR_DONTRECORD })
+
+-- Register binding functions
+bind.Register("placetotem", function() LookUpTotem(nil, nil, nil, nil) end)
+bind.Register("votemenu", function() LookUpVoteMenu(nil, nil, nil, nil) end)
+
 
 concommand.Add("votemenu", LookUpVoteMenu,nil,"Opens / Closes the vote menu", { FCVAR_DONTRECORD })
 net.Receive("TTTVoteMenu", LookUpVoteMenu)
 concommand.Add("placebeacon", LookUpTotem,nil,"Places a Totem", { FCVAR_DONTRECORD }) -- for backwards compatibility reasons
 concommand.Add("placetotem", LookUpTotem,nil,"Places a Totem", { FCVAR_DONTRECORD })
+hook.Add("TTTSettingsTabs", "TTTTotemBindings", SettingsTab)

@@ -2,6 +2,7 @@ if not TTTVote then
 	TTTVote = {}
 	file.CreateDir( "vote" )
 
+	AddCSLuaFile("bind/cl_bind.lua")
 	AddCSLuaFile("vote/shared/vote_overrides_shd.lua")
 	AddCSLuaFile("vote/shared/player.lua")
 	AddCSLuaFile("vote/client/cl_halos.lua")
@@ -9,6 +10,7 @@ if not TTTVote then
 	AddCSLuaFile("vote/client/cl_changelog.lua")
 	AddCSLuaFile("vote/client/cl_messages.lua")
 	AddCSLuaFile("vote/client/cl_deathgrip.lua")
+	AddCSLuaFile("vote/client/cl_totem.lua")
 	AddCSLuaFile("vote/cl_init.lua")
 	AddCSLuaFile("vote/shared.lua")
 	AddCSLuaFile("autorun/ttt_vote_autorun.lua")

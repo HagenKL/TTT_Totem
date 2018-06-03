@@ -6,6 +6,7 @@ if not TTTVote then
 	AddCSLuaFile("bind/cl_bind.lua")
 	AddCSLuaFile("vote/shared/vote_overrides_shd.lua")
 	AddCSLuaFile("vote/shared/player.lua")
+	AddCSLuaFile("vote/client/cl_db.lua")
 	AddCSLuaFile("vote/client/cl_visuals.lua")
 	AddCSLuaFile("vote/client/cl_halos.lua")
 	AddCSLuaFile("vote/client/cl_menu.lua")

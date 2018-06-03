@@ -1,5 +1,8 @@
 -- Equip icons or TEXT
+local enableTTTEnhancements = GetConVar( "ttt_enhancements" );
 hook.Add( "HUDPaint", "TTTEnhancementsEquipHUD", function()
+	if not enableTTTEnhancements:GetBool() then return end
+
 	local ply = LocalPlayer()
 	local equipbits = ply:GetEquipmentItems()
 	local equipnum = 1

@@ -1,8 +1,6 @@
 local votemenu = nil
 
 
-
-
 local function OpenVoteMenu()
   local frame = vgui.Create("DFrame")
   frame:SetSize(500,360)
@@ -106,7 +104,15 @@ end
 end*/
 
 local function SettingsTab(dtabs)
-	local dsettings = vgui.Create("DPanelList", dtabs)
+	local PANEL = {}
+
+	function PANEL:Init()
+		-- set bool
+		DBInsertData(totem_info_bindings_key, "true")
+	end
+	vgui.Register("DTotemSettingsPanelList", PANEL, "DPanelList")
+
+	local dsettings = vgui.Create("DTotemSettingsPanelList", dtabs)
 	local padding = dtabs:GetPadding()
 	dsettings:StretchToParent(0,0,padding,0)
 	dsettings:EnableVerticalScrollbar(true)
@@ -164,14 +170,12 @@ local function SettingsTab(dtabs)
 	dguiT:SetName("Totem")
 
 	dguiT:CheckBox( "Automaticially try placing a Totem", "ttt_totem_auto" )
+	dguiT:CheckBox( "TTT Enhancements activated? (Equip-HUD)", "ttt_enhancements" )
 
 	dsettings:AddItem(dguiT)
 
 	dtabs:AddSheet("Totem", dsettings, "icon16/wrench.png", false, false, "Totem Settings")
 end
-
---concommand.Add("+votemenu", TTTVote.LookUpVoteMenu,nil,"Opens the vote menu", { FCVAR_DONTRECORD })
---concommand.Add("-votemenu", TTTVote.CloseVoteMenu,nil,"Closes the vote menu", { FCVAR_DONTRECORD })
 
 -- Register binding functions
 bind.Register("placetotem", function() LookUpTotem(nil, nil, nil, nil) end)

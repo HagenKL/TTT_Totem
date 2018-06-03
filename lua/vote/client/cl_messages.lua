@@ -6,6 +6,14 @@ surface.CreateFont("TTTVotefont", {
     antialias = false
   })
 
+
+local function InfoBindings()
+	local res = DBLoadValue(totem_info_bindings_key)
+	if res == "true" then return end
+	chat.AddText("TTT Totem: ", COLOR_RED, "Sieh dir die Einstellungen für die Tastenbelegung unter > F1 < an, um Totem spielen zu können. (Dann verschwindet diese Nachricht)")
+end
+
+
 local function PrintCenteredKOSText(txt,delay,color)
   if hook.GetTable()["TTTVoteKOS"] then
     hook.Remove("HUDPaint", "TTTVoteKOS")
@@ -73,3 +81,4 @@ local function TotemMessage()
 end
 
 net.Receive("TTTTotem", TotemMessage)
+hook.Add( "TTTPrepareRound", "TTTInfoBindings", InfoBindings)

@@ -28,10 +28,11 @@ It will get updated every time I have time to change something!<br>
 </div>
 - Possible fix for rare red overlay after shinigamis respawn. <br>
 - Added indicator above crosshair if the shinigami looks at traitors.<br>
-- Added instant respawn if you die in preparing<br>
+- Added instant respawn if you die in Preparing.<br>
 - Shinigami now actually receives roles of traitors, so they will be visible on the scoreboard.<br>
 - Shinigami traitor GUI now updates, as traitors die.<br>
 - Added small animations to Shinigami traitor GUI.<br>
+- Added a start message, to let new players know about the F1 menu
 
 <h2>Version 1.2.1 (06/10/2017):</h2>
 

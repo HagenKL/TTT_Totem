@@ -20,6 +20,8 @@ if not TTTVote then
 	-- Clientside bind lib
 	include("bind/cl_bind.lua")
 
+	include("vote/client/cl_db.lua")
+
 	include("vote/vgui/AnimatedImage.lua")
 	include("vote/client/cl_visuals.lua")
 	include("vote/client/cl_changelog.lua")

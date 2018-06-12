@@ -174,6 +174,14 @@ local function SettingsTab(dtabs)
 
 	dsettings:AddItem(dguiT)
 
+	local dguiVis = vgui.Create("DForm", dsettings)
+	dguiVis:SetName("Animations")
+
+	dguiVis:CheckBox( "Role Animation?", "ttt_totem_vis_role" )
+	dguiVis:CheckBox( "DeathGrip Animation?", "ttt_totem_vis_deathgrip" )
+
+	dsettings:AddItem(dguiVis)
+
 	dtabs:AddSheet("Totem", dsettings, "icon16/wrench.png", false, false, "Totem Settings")
 end
 

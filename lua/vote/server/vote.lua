@@ -179,6 +179,8 @@ local function PunishtheInnocents()
     if v:IsTerror() and v.VotePunishment then
       v:SetHealth(v:GetMaxHealth() - 30)
       v.VotePunishment = false
+	  net.Start("TTTVoteWrongVoteMessage")
+	  net.Send(v)
     end
   end
 end

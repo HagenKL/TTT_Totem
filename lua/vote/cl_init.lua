@@ -7,6 +7,10 @@ if not TTTVote then
 
 	CreateConVar( "ttt_totem_auto", "1", {FCVAR_ARCHIVE}, "Soll das Totem automatisch plaziert werden?" )
 
+	-- Visuals:
+	CreateConVar( "ttt_totem_vis_role", "1", {FCVAR_ARCHIVE}, "Soll die Rollenanimation angezeigt werden?" )
+	CreateConVar( "ttt_totem_vis_deathgrip", "1", {FCVAR_ARCHIVE}, "Soll die DeathGrip-Animation angezeigt werden?" )
+
 	CreateConVar( "ttt_shinigami_hint", "1", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Soll der DeathGrip/Shinigami Hinweis (Shinigami icon rechts oben) aktiviert sein?" )
 	CreateConVar( "ttt_shinigami_gui", "1", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Soll die GUI für Shinigami ( Namen in rot unten ) aktiviert sein?" )
 	CreateConVar( "ttt_deathgrip_ch_warning", "1", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Soll die DeathGrip Warnung am Crosshair aktiviert sein?" )

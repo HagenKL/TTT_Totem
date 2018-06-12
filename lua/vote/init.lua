@@ -101,6 +101,7 @@ if not TTTVote then
 		util.AddNetworkString("TTTVoteMenu")
 		util.AddNetworkString("TTTVoteCurse")
 		util.AddNetworkString("TTTVoteFailure")
+		util.AddNetworkString("TTTVoteWrongVoteMessage")
 	end
 
 	if DeathGripEnabled() then

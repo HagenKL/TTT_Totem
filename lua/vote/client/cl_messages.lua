@@ -27,6 +27,10 @@ local function PrintCenteredKOSText(txt,delay,color)
   end
 end
 
+net.Receive("TTTVoteWrongVoteMessage",function()
+	ENHANCED_NOTIFICATIONS:NewNotification({title="Du hast letzte Runde für einen Unschuldigen gestimmt.", subtext="Deswegen werden dir Leben abgezogen."})
+end)
+
 net.Receive("TTTVoteMessage",function()
     local sender = net.ReadEntity()
     local target = net.ReadEntity()

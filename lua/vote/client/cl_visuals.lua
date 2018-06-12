@@ -1,4 +1,5 @@
 function vis_DeathGrip_start()
+	if(not GetConVar("ttt_totem_vis_deathgrip"):GetBool()) then return end
 	local DImgDGS = vgui.Create("DAnimatedImage")
 	local size = 600
 	local yoffset = 100
@@ -18,6 +19,7 @@ end
 --bind.Register("dgs", vis_DeathGrip_start)
 --bind.Add(24, "dgb", false)
 function vis_DeathGrip_break()
+	if(not GetConVar("ttt_totem_vis_deathgrip"):GetBool()) then return end
 	local DImg = vgui.Create("DAnimatedImage")
 	local size = 600
 	local yoffset = 100
@@ -36,6 +38,8 @@ end
 --bind.Register("dgb", vis_DeathGrip_break)
 
 function vis_GetRole()
+	if(not GetConVar("ttt_totem_vis_role"):GetBool()) then return end
+
 	local ply = LocalPlayer()
 	local banner = ply:GetRoleTable().roleBanner
 	if not banner or ply.visrecentrole == ply:GetRole() then
@@ -43,18 +47,20 @@ function vis_GetRole()
 	end
 	ply.visrecentrole = ply:GetRole()
 	local DImg = vgui.Create("DImage")
-	local size = 500
-	local yoffset = 60
-	local animyoffset = 40
+	local size = 300
+	local yoffset = 80
+	local animyoffset = 60
 	DImg:SetSize(size, size)
 	DImg:SetPos(ScrW()/2 - size/2, ScrH()/2 - size/2 - yoffset - animyoffset)
 	DImg:SetAlpha(0)
-	DImg:AlphaTo( 255, 0.8 )
+	DImg:AlphaTo( 240, 0.8 )
 	DImg:MoveTo( ScrW()/2 - size/2, ScrH()/2 - size/2 - yoffset, 0.3, 0, -200)
 	DImg:AlphaTo( 0, 1, 2.4, function(tbl, pnl) pnl:Remove() end )
 	DImg:SetMaterial(banner)
 end
+
 --bind.Register("gr", vis_GetRole)
 --bind.Remove(24, "gr")
+
 hook.Add("TTTReceiveRole", "TTTVisualsRoleRecv", vis_GetRole)
 hook.Add("TTTBeginRound", "TTTVisualsRoleRecvCleanup", function () LocalPlayer().visrecentrole = nil end)

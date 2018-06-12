@@ -14,17 +14,19 @@ This is the changelog for Gamefreaks Addons / Totem! (Started Documenting 05/26/
 This will only get shown once a day! <br>
 It will get updated every time I have time to change something!<br>
 
-<h2>Version 1.3 (09/03/2018):</h2>
+<h2>Version 1.3 (10/06/2018):</h2>
 
-- Updated TTT version to commit f70ab893ad21ddf9f11bf41f4a29badf9faaa0bf <br>
+- Updated TTT version to commit 1a1f4ac4e9150f9b3a2c65a21136b985c4d6419b <br>
 - Updated Enhanced Notification Framework<br>
 - A wrong vote now will let you lose 30 HP on the next round<br>
+- You will be notified on a wrong vote<br>
 - Reworked Role loading mechanic, to ensure that server and client are loading the roles in the same order. <br>
 - Added an equipment GUI, indicating what passive items you own. <br>
 - Added a tab to the F1 menu "Totem"<br>
 <div style=" text-align: left; margin-left: 15px;">
 	- Added buttons for binding the keys needed for Totem. <br>
 	- Added an option to place a totem automaticially when the round begins.<br>
+	- Added various options to disable / enbale clientside visuals.<br>
 </div>
 - Possible fix for rare red overlay after shinigamis respawn. <br>
 - Added indicator above crosshair if the shinigami looks at traitors.<br>
@@ -32,7 +34,7 @@ It will get updated every time I have time to change something!<br>
 - Shinigami now actually receives roles of traitors, so they will be visible on the scoreboard.<br>
 - Shinigami traitor GUI now updates, as traitors die.<br>
 - Added small animations to Shinigami traitor GUI.<br>
-- Added a start message, to let new players know about the F1 menu
+- Added a start message, to let new players know about the F1 menu.<br>
 
 <h2>Version 1.2.1 (06/10/2017):</h2>
 

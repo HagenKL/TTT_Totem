@@ -305,6 +305,11 @@ function plymeta:SpawnForRound(dead_only)
 		SendFullStateUpdate()
 	end
 	
+	if(self:GetRole() == ROLE_SIDEKICK && jackalCount == 0) then
+		self:SetRole(ROLE_JACKAL)
+		SendFullStateUpdate()
+	end
+	
    self:StripAll()
    self:SetTeam(TEAM_TERROR)
    self:Spawn()

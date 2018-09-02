@@ -39,8 +39,9 @@ end
 
 function vis_GetRole()
 	if(not GetConVar("ttt_totem_vis_role"):GetBool()) then return end
-
 	local ply = LocalPlayer()
+	if(not IsValid(ply) or not ply:IsTerror()) then return end
+
 	local banner = ply:GetRoleTable().roleBanner
 	if not banner or ply.visrecentrole == ply:GetRole() then
 		return

@@ -128,7 +128,7 @@ function bind.Remove( btn, name )
 end
 
 -- INIT
-hook.Add("InitPostEntity", "TTTLoadBindings", LoadBindings)
+hook.Add("PostGamemodeLoaded", "TTTLoadBindings", LoadBindings)
 
 local FirstPressed = {}
 

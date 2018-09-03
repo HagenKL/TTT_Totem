@@ -227,7 +227,7 @@ end
 local function ShinigamiTraitorInfo()
 	local client = LocalPlayer()
 
-	if (not client:IsShinigami()) then
+	if (not IsValid(client) or not client:IsTerror() or not client:IsShinigami()) then
 		return
 	end
 

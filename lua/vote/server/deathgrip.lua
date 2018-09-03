@@ -48,10 +48,12 @@ end
 local function SendShinigamiInfo(ply)
   SendEvilList(ply)
   local tbl = {}
-  for k,v in pairs(util.GetAlivePlayers()) do
-    if v:GetEvil() then
-      table.insert(tbl,v:Nick())
-    end
+  if(ply:IsTerror()) then
+	  for k,v in pairs(util.GetAlivePlayers()) do
+	    if v:GetEvil() then
+	      table.insert(tbl,v:Nick())
+	    end
+	  end
   end
   net.Start("TTTShinigamiInfo")
   net.WriteUInt(#tbl,8)
@@ -151,6 +153,7 @@ local function ShinigamiTListUpdate(ply)
 	if ( ply:GetEvil() ) then
 		for _, v in pairs( util.GetAlivePlayers() ) do
 			if( v:GetShinigami() and v.ShinigamiRespawned ) then
+				if not v:IsTerror() and v != ply then return end
 				SendShinigamiInfo(v)
 				break
 			end

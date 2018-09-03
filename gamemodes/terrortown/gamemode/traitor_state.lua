@@ -11,29 +11,22 @@ function CountTraitors() return #GetTraitors() end
 
 ---- Role state communication
 
--- Send every player their role
-local function SendPlayerRoles()
-   for k, v in pairs(player.GetAll()) do
-      net.Start("TTT_Role")
-        local func = v:GetRoleTable().HideRole
-        if func and func(v) then
-          net.WriteUInt(func(v),4)
-        else
-         net.WriteUInt(v:GetRole(), 4)
-        end
-      net.Send(v)
-   end
-end
-
 local function SendPlayerRole(ply)
     net.Start("TTT_Role")
       local func = ply:GetRoleTable().HideRole
       if func and func(ply) then
-        net.WriteUInt(func(ply),4)
+		  net.WriteUInt(func(ply),4)
       else
-       net.WriteUInt(ply:GetRole(), 4)
+		  net.WriteUInt(ply:GetRole(), 4)
       end
     net.Send(ply)
+end
+
+-- Send every player their role
+local function SendPlayerRoles()
+   for k, v in pairs(player.GetAll()) do
+	   SendPlayerRole(v)
+   end
 end
 
 local function SendUpdatedFakeRoles(ply_or_rf)

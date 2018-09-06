@@ -291,11 +291,29 @@ function plymeta:SpawnForRound(dead_only)
    if self:Team() == TEAM_SPEC then
       self:UnSpectate()
    end
-
+	
+   	--respawn as Sidekick if he was a Jackal and another Jackal exists
+	jackalCount = 0
+	for k,v in pairs(player.GetAll()) do
+		if(v:GetRole() == ROLE_JACKAL && v:Alive()) then
+			jackalCount = jackalCount + 1
+		end
+	end
+	
+	if(self:GetRole() == ROLE_JACKAL && jackalCount > 0) then
+		self:SetRole(ROLE_SIDEKICK)
+		SendFullStateUpdate()
+	end
+	
+	if(self:GetRole() == ROLE_SIDEKICK && jackalCount == 0) then
+		self:SetRole(ROLE_JACKAL)
+		SendFullStateUpdate()
+	end
+	
    self:StripAll()
    self:SetTeam(TEAM_TERROR)
    self:Spawn()
-
+	
    -- tell caller that we spawned
    return true
 end
